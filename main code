@@ -1,0 +1,85 @@
+import random
+import time
+levelDigits = [1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 7, 7, 7]
+levelRange = [3, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 10, 10, 10]
+levelGuesses = [3, 5, 5, 6, 6, 8, 8, 10, 10, 12, 11, 10, 14, 13, 12]
+chosenLevel=1
+print("*******************************************")
+print("Welcome to password hacker!")
+print("*******************************************")
+time.sleep(2)
+print()
+print()
+print("Your goal is to correctly guess all 15 of the passwords using certain clues.")
+time.sleep(4)
+print("Every time you guess the password, you are told how many of your guessed digits are correct or close to being correct.")
+time.sleep(5)
+print("Using this information, you will try to guess the password within the given amount of guesses.")
+time.sleep(5)
+print("You are now beginning level " + str(int(chosenLevel)) + ".")
+time.sleep(2)
+while 0 != 1:
+    print()
+    print()
+    digits = levelDigits[int(chosenLevel) - 1]
+    possibleNumbers = levelRange[int(chosenLevel) - 1]
+    guesses = levelGuesses[int(chosenLevel) - 1]
+    password = str(random.randint(0, int(possibleNumbers)-1))
+    for x in range(digits-1):
+        password = password + str(random.randint(0,possibleNumbers-1))
+    print ("********************************************")
+    print ("This password has " + str(digits) + " digits and each digit has " + str(possibleNumbers) + " possible numbers which range from 0 to " + str(possibleNumbers-1))
+    print ("You will have " + str(guesses) + " guesses to guess the password.")
+    print ("********************************************")
+    time.sleep(3)
+    print ()
+    print ()
+    guess = input("Enter your guess for the password. Reminder that the password has " + str(digits) + " digits and goes up to " + str(int(possibleNumbers)-1) + ". ")
+    while len(guess) != digits and guess != "restart":
+        guess = input("That doesn't have " + str(digits) + "! Try entering something else: ")
+    guesses-=1
+    while str(guess) != str(password) and guesses != 0:
+        print ()
+        print()
+        print("********************************************")
+        print("Wrong guess!")
+        correctDigits = 0
+        closeDigits = 0
+        x=0
+        while x < digits:
+            if guess[x] == password[x]:
+                correctDigits += 1
+            elif int(guess[x]) - int(password[x]) == 1 or int(guess[x]) - int(password[x]) == -1:
+                closeDigits += 1
+            x+=1
+
+        print(str(correctDigits) + " of the digits were correct.")
+        print(str(closeDigits) + " of the digits were 1 off from being correct.")
+        print("You have " + str(guesses) + " guesses remaining.")
+        print("********************************************")
+        print()
+        print()
+        guess = input("Enter your guess for the password. Reminder that the password has " + str(digits) + " digits and goes up to " + str(int(possibleNumbers)-1) + ". ")
+        while len(guess) != digits:
+            guess = input("That doesn't have " + str(digits) + "! Try entering something else: ")
+        guesses-=1
+    if str(guess) == str(password):
+        print("Nicely done! You successfully guessed the password with " + str(guesses) + " guesses remaining.")
+        time.sleep(2)
+        print()
+        print()
+        print("You are now beginning level " + str(int(chosenLevel)+1) + ".")
+        time.sleep(2)
+        chosenLevel += 1
+    else:
+        print("Nice try! You ran out of guesses!")
+        time.sleep(2)
+        print("The password was " + password)
+        time.sleep(2)
+        print()
+        print()
+        print("Retrying level " + str(chosenLevel) + ".")
+        time.sleep(2)
+    
+    
+
